@@ -1,10 +1,11 @@
 import  express from 'express'
 import { rutasPersonalizadas } from '../Routes/rutas.js'
-
+import { connectarConMongo } from '../Database/conexion.js'
 
 export class ServidorAPI{
     constructor(){
          this.app = express()
+         this.conectarConBD()
          this.atenderPeticiones()
     }
     //Metodos de la clase ServidorAPI
@@ -21,6 +22,8 @@ export class ServidorAPI{
       
 }
 
-conectarConBD(){}
+conectarConBD(){
+    connectarConMongo()
+}
 
 }
