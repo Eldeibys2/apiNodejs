@@ -10,4 +10,4 @@ let controladorHabitacion = new ControladorHabitacion()//usando el controlador
 rutasPersonalizadas.get('/hotelessanfe/habitaciones',controladorHabitacion.buscarHabitaciones)
 rutasPersonalizadas.get('/hotelessanfe/habitacion/:id',controladorHabitacion.buscarHabitacionPorId)
 rutasPersonalizadas.post('/hotelessanfe/habitacion',controladorHabitacion.registrarHabitacion)
-rutasPersonalizadas.put('/hotelessanfe/habitacion',controladorHabitacion.editarHabitacion)
+rutasPersonalizadas.put('/hotelessanfe/habitacion',controladorHabitacion.editarHabitacion)      

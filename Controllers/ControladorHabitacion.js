@@ -1,60 +1,112 @@
- export class ControladorHabitacion{
+import {ServicioHabitacion} from '../services/ServicioHabitacion.js'
+
+export class ControladorHabitacion{
+
     constructor(){}
 
-    buscarHabitaciones(request,response){
-        try {
+    async buscarHabitaciones(request,response){
+
+        let objetoServicioHabitacion=new ServicioHabitacion()
+
+        try{
+
             response.status(200).json({
-                "mensaje": "Exito en la consulta",
-                "datos":"Aqui van los datos de habitaciones"
+                "mensaje":"exito en la consulta",
+                "datos":await objetoServicioHabitacion.buscarHabitaciones(),
             })
-        } catch (error) {
+
+        }catch(error){
+
             response.status(400).json({
-                "mensaje": "Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la consulta "+error,
+                "datos":null,
             })
+
         }
-      
+
+        
+        
     }
 
-    buscarHabitacionPorId(request,response){
-        try {
+    async buscarHabitacionPorId(request,response){
+        let id=request.params.idHabitacion //recibo id de la peticion
+        let objetoServicioHabitacion=new ServicioHabitacion()
+        try{
+
             response.status(200).json({
-                "mensaje": "Exito en la consulta",
-                "datos":"Aqui van los datos de habitaciones"
+                "mensaje":"exito en la consulta "+id,
+                "datos":await objetoServicioHabitacion.buscarHabitacionPorId(id),
             })
-        } catch (error) {
+
+        }catch(error){
+
             response.status(400).json({
-                "mensaje": "Error en la consulta"+error,
-                "datos":null
+                "mensaje":"error en la consulta "+error,
+                "datos":null,
             })
+
         }
     }
 
-    registrarHabitacion(request,response){
-        try {
-            response.status(200).json({
-                "mensaje": "Exito agregando la habitacion",
-                "datos":null
-            })
-        } catch (error) {
+    async registrarHabitacion(request,response){
+
+        let datosHabitacion=request.body //Obtengo datos del body
+        let objetoServicioHabitacion=new ServicioHabitacion()
+        
+        try{
+            console.log(datosHabitacion)
+            if(datosHabitacion.numeroMaximoPersonas<8){
+            await objetoServicioHabitacion.agregarHabitacionEnBD(datosHabitacion)
+
+                response.status(200).json({
+                    "mensaje":"exito registrando la habitacion",
+                    "datos":null
+                })
+            }else{
+                response.status(400).json({
+                    "mensaje":"no caben tantas babys",
+                    "datos":null
+                })
+            }
+
+            await objetoServicioHabitacion.agregarHabitacionEnBD(datosHabitacion)
+          
+        }catch(error){
+
             response.status(400).json({
-                "mensaje": "Error agregando la habitacion"+error,
-                "datos":null
+                "mensaje":"error en la consulta "+error,
+                "datos":null,
             })
+
         }
     }
 
-    editarHabitacion(request,response){
-        try {
+    async editarHabitacion(request,response){
+
+        let id = request.params.idHabitacion
+        let datosHabitacion = request.body
+
+        let objetoServicioHabitacion=new ServicioHabitacion()
+       
+
+        try{
+
+            await objetoServicioHabitacion.editarHabitacion(id,datosHabitacion)
+
             response.status(200).json({
-                "mensaje": "Exito editando la habitacion",
-                "datos":null
+                "mensaje":"exito editando"+id,
+                "datos":null,
             })
-        } catch (error) {
+
+        }catch(error){
+
             response.status(400).json({
-                "mensaje": "Error editando la habitacion"+error,
-                "datos":null
+                "mensaje":"error en la consulta "+error,
+                "datos":null,
             })
+
         }
     }
+
+
 }
