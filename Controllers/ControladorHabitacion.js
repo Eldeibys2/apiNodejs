@@ -1,4 +1,5 @@
 import {ServicioHabitacion} from '../services/ServicioHabitacion.js'
+import {ServicioReserva } from '../services/ServicioReserva.js'
 
 export class ControladorHabitacion{
 
@@ -29,7 +30,7 @@ export class ControladorHabitacion{
     }
 
     async buscarHabitacionPorId(request,response){
-        let id=request.params.idHabitacion //recibo id de la peticion
+        let id=request.params.id //recibo id de la peticion
         let objetoServicioHabitacion=new ServicioHabitacion()
         try{
 
@@ -54,7 +55,7 @@ export class ControladorHabitacion{
         let objetoServicioHabitacion=new ServicioHabitacion()
         
         try{
-            console.log(datosHabitacion)
+            
             if(datosHabitacion.numeroMaximoPersonas<8){
             await objetoServicioHabitacion.agregarHabitacionEnBD(datosHabitacion)
 
@@ -83,7 +84,7 @@ export class ControladorHabitacion{
 
     async editarHabitacion(request,response){
 
-        let id = request.params.idHabitacion
+        let id = request.params.id
         let datosHabitacion = request.body
 
         let objetoServicioHabitacion=new ServicioHabitacion()
@@ -95,7 +96,7 @@ export class ControladorHabitacion{
 
             response.status(200).json({
                 "mensaje":"exito editando"+id,
-                "datos":null,
+                "datos":datosHabitacion,
             })
 
         }catch(error){
