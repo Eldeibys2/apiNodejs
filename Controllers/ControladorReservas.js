@@ -62,7 +62,7 @@ export class ControladorReservas{
                     datosReserva.costoDeReserva = costo
                     console.log(datosReserva)
                     await objetoServicioReserva.agregarReservaEnBD(datosReserva)
-                    res.status(200).json({
+                    response.status(200).json({
                         "mensaje" :"Reserva exitosa",
                         "datos":datosReserva,
                     })
@@ -79,7 +79,7 @@ export class ControladorReservas{
                 })
             }
         } catch (error) {
-            res.status(400).json({
+            response.status(400).json({
                 "mensaje" :"Error en el guardado " + error,
                 "datos":null
             })
