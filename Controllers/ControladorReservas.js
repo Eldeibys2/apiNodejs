@@ -42,13 +42,13 @@ export class ControladorReservas{
 
         }
     }
-    async registrarReservas(req, res){
+    async registrarReservas(req, response){
         let datosReserva = req.body
         //console.log(datosReserva)
         let objetoServicioReserva = new ServicioReserva()
         let objetoServicioHabitacion = new ServicioHabitacion()
         try {
-            let datosHabitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosReserva.id)
+            let datosHabitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosReserva.idHabitacion)
             let maximoDePersonas = datosHabitacion.numeroMaximoPersonas
             let totalPersonas = datosReserva.numeroDeNiños + datosReserva.numeroDeAdultos
             let fechaDeIngreso = new Date(datosReserva.fechaDeEntrada)
@@ -86,13 +86,13 @@ export class ControladorReservas{
         }
     }
 
-    async editarReservas(req, res){
+    async editarReservas(req, response){
         let id = req.params.idReserva
         let datosReserva = req.body
         let objetoServicioReserva = new ServicioReserva()
         let objetoServicioHabitacion = new ServicioHabitacion()
         try {
-            let datosHabitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosReserva.id)
+            let datosHabitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosReserva.idHabitacion)
             let maximoDePersonas = datosHabitacion.numeroMaximoPersonas
             let totalPersonas = datosReserva.numeroDeNiños + datosReserva.numeroDeAdultos
             let fechaDeIngreso = new Date(datosReserva.fechaDeEntrada)
@@ -106,7 +106,7 @@ export class ControladorReservas{
                     datosReserva.costoDeReserva = costo
                     console.log(datosReserva)
                     await objetoServicioReserva.agregarReservaEnBD(datosReserva)
-                    res.status(200).json({
+                    response.status(200).json({
                         "mensaje" :"Reserva exitosa",
                         "datos":datosReserva,
                     })
@@ -123,7 +123,7 @@ export class ControladorReservas{
                 })
             }
         } catch (error) {
-            res.status(400).json({
+            response.status(400).json({
                 "mensaje" :"Error en el guardado " + error,
                 "datos":null
             })
